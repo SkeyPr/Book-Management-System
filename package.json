@@ -1,0 +1,26 @@
+{
+  "name": "book-management-system",
+  "version": "1.0.0",
+  "description": "A Book Management Service that can be used in places like Libraries",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SkeyPr/Book-Management-System.git"
+  },
+  "author": "Akash",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SkeyPr/Book-Management-System/issues"
+  },
+  "homepage": "https://github.com/SkeyPr/Book-Management-System#readme",
+  "devDependencies": {
+    "nodemon": "^1.14.9"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
