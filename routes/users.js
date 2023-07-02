@@ -147,3 +147,46 @@ router.delete("/:id", (req, res) => {
     .status(200)
     .json({ success: true, message: "Deleted User..", data: users });
 });
+
+/**
+ * http://localhost:8081/users/subscription-details/:id
+ * Route : "/users/subscription-details/:id"
+ * Method: "Get"
+ * Description: "Getting all the subscription details"
+ * Access: "Public"
+ * Parameters: "ID"
+ */
+
+router.get("/subscription-details/:id", (req, res) => {
+  const { id } = req.params;
+  const user = users.find((each) => each.id === id);
+
+  if (!user) {
+    return res.status(404).json({
+      success: false,
+      message: "User With The ID not found",
+    });
+  }
+
+  const getDateInDays = (data = "") => {
+    let date;
+    if (data === "") {
+      date = new Date();
+    } else {
+      date = new Date(data);
+    }
+    let days = Math.floor(data / (1000 * 60 * 60 * 24));
+    return days;
+  };
+
+  const subscriptionType = (date) => {
+    if ((user.subscriptionType = "Basic")) {
+      date = date + 90;
+    } else if ((user.subscriptionType = "Standard")) {
+      date = date + 180;
+    } else if ((user.subscriptionType = "Premium")) {
+      date = date + 365;
+    }
+    return date;
+  };
+});

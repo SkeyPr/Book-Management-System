@@ -12,8 +12,7 @@ app.use(express.json());
 // http://localhost:8081/users/
 app.get("/", (req, res) => {
   res.status(200).json({
-    message: "Server is up and running :-)",
-    data: "hey",
+    message: "Server now is up and running",
   });
 });
 

@@ -90,10 +90,64 @@ router.get("/:id", (req, res) => {
 
 /**
  * Route : "/"
+ * Method: "Post"
+ * Description: "Adding a new book"
+ * Access: "Public"
+ * Parameters: "id","name","genre","price","publisher","author"
+ */
+
+router.put("/", (req, res) => {
+  const { data } = req.body;
+
+  if (!data) {
+    return res.status(400).json({
+      success: false,
+      message: "Please Provide data in order to add a book",
+    });
+  }
+  const book = books.find((each) => each.id === data.id);
+  if (book) {
+    return res.status(200).json({
+      success: false,
+      message: "ID already exists",
+    });
+  }
+  const allBooks = { ...books, data };
+  return res.status(201).json({
+    success: true,
+    message: "Book addition successful",
+    data: allBooks,
+  });
+});
+
+/**
+ * Route : "/:id"
  * Method: "Put"
  * Description: "Upload a book by its id"
  * Access: "Public"
- * Parameters: "None"
+ * Parameters: "id"
  */
 
-router.put("/:id", (req, res) => {});
+router.put("/updateBook/:id", (req, res) => {
+  const { id } = req.params;
+  const { data } = req.body;
+
+  const bookIndex = books.findIndex((each) => each.id === id);
+
+  if (bookIndex === -1) {
+    return res.status(404).json({
+      success: false,
+      message: "Book Not Found for this particular ID",
+    });
+  }
+
+  const updatedBook = { ...books[bookIndex], ...data };
+
+  books[bookIndex] = updatedBook;
+
+  return res.status(200).json({
+    success: true,
+    message: "Updated a Book by the id",
+    data: updatedBook,
+  });
+});
