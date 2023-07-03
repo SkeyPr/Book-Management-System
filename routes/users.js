@@ -164,7 +164,7 @@ router.get("/subscription-details/:id", (req, res) => {
   if (!user) {
     return res.status(404).json({
       success: false,
-      message: "User With The ID not found",
+      message: "User With The ID does not exist",
     });
   }
 
@@ -175,18 +175,44 @@ router.get("/subscription-details/:id", (req, res) => {
     } else {
       date = new Date(data);
     }
-    let days = Math.floor(data / (1000 * 60 * 60 * 24));
+    let days = Math.floor(date / (1000 * 60 * 60 * 24));
     return days;
   };
 
   const subscriptionType = (date) => {
-    if ((user.subscriptionType = "Basic")) {
+    if (user.subscriptionType === "Basic") {
       date = date + 90;
-    } else if ((user.subscriptionType = "Standard")) {
+    } else if (user.subscriptionType === "Standard") {
       date = date + 180;
-    } else if ((user.subscriptionType = "Premium")) {
+    } else if (user.subscriptionType === "Premium") {
       date = date + 365;
     }
     return date;
   };
+
+  // Jan 1 1970 UTC
+  let returnDate = getDateInDays(user.returnDate);
+  let currentDate = getDateInDays();
+  let subscriptionDate = getDateInDays(user.subscriptionDate);
+  let subscriptionExpiration = subscriptionType(subscriptionDate);
+
+  const data = {
+    ...user,
+    isSubscriptionExpired: subscriptionExpiration < currentDate,
+    daysLeftForExpiration:
+      subscriptionExpiration <= currentDate
+        ? 0
+        : subscriptionExpiration - currentDate,
+    fine:
+      returnDate < currentDate
+        ? subscriptionExpiration <= currentDate
+          ? 100
+          : 50
+        : 0,
+  };
+  return res.status(200).json({
+    success: true,
+    message: "Subscription details for this particular user are: ",
+    data,
+  });
 });
