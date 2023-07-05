@@ -1,10 +1,20 @@
 const express = require("express");
 
+const dotenv = require("dotenv");
+
 const users = require("./data/users.json");
+
+const DbConnection = require("./databaseConnection.js");
 
 const userRouter = require("./routes/users");
 
 const booksRouter = require("./routes/books");
+
+require("dotenv").config();
+
+dotenv.config();
+
+DbConnection();
 
 const app = express();
 app.use(express.json());
@@ -12,7 +22,7 @@ app.use(express.json());
 // http://localhost:8081/users/
 app.get("/", (req, res) => {
   res.status(200).json({
-    message: "Server now is up and running",
+    message: "Server is up and running",
   });
 });
 
