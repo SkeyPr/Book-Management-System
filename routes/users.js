@@ -4,6 +4,10 @@ const { users } = require("../data/users.json");
 
 const router = express.Router();
 
+const BookModel = require("../models/book-model");
+
+const UserModel = require("../models/user-model");
+
 module.exports = router;
 
 /**
