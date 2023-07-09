@@ -1,10 +1,6 @@
-const bookModel = require("../models/book-model");
+const { BookModel, UserModel } = require("../models");
 
-const BookModel = require("../models/book-model");
-
-const UserModel = require("../models/user-model");
-
-const issuedBook = require("../dtos/book-dto.js");
+const IssuedBook = require("../dtos/book-dto.js");
 
 const getAllBooks = async (req, res) => {
   const books = await BookModel.find();
