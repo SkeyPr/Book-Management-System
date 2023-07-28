@@ -5,7 +5,7 @@ This is a Book Record Management API Server / Backend system
 # Fine System
 
 A Book may be borrowed for 3 months at a time
-$50/- per extension day
+$50 per extension day
 
 # Subscriptions
 
